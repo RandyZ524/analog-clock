@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.scene.text.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -43,9 +42,8 @@ public class zhanganalogclockchallenge extends Application {
 		Line[] tickmark;
 		Circle center, frame;
 		Text timedisplay, timezonedisplay;
-		Rectangle backgroundrect;
 		
-		Clock(int xpos, int ypos, String timezone, Line hourhand, Line minutehand, Line secondhand, Line[] tickmark, Circle center, Circle frame, Text timedisplay, Text timezonedisplay, Rectangle backgroundrect) {
+		Clock(int xpos, int ypos, String timezone, Line hourhand, Line minutehand, Line secondhand, Line[] tickmark, Circle center, Circle frame, Text timedisplay, Text timezonedisplay) {
 			this.xpos = xpos;
 			this.ypos = ypos;
 			this.timezone = timezone;
@@ -57,15 +55,9 @@ public class zhanganalogclockchallenge extends Application {
 			this.frame = frame;
 			this.timedisplay = timedisplay;
 			this.timezonedisplay = timezonedisplay;
-			this.backgroundrect = backgroundrect;
 		}
 		
 		public void create() {
-			backgroundrect.setX(xpos - 70);
-			backgroundrect.setY(ypos - 65);
-			backgroundrect.setWidth(350);
-			backgroundrect.setHeight(120);
-			
 			frame.setCenterX(xpos);
 			frame.setCenterY(ypos);
 			frame.setRadius(50);
@@ -269,10 +261,10 @@ public class zhanganalogclockchallenge extends Application {
 				rootNode.getChildren().clear();
 				
 				for (i = 0; i < 10; i++) {
-					gridclocks[i] = new Clock(350 * (i % 2) + 70, 120 * (i / 2) + 65, tzinputboxes[i].getText(), new Line(), new Line(), new Line(), new Line[60], new Circle(), new Circle(), new Text(), new Text(), new Rectangle());
+					gridclocks[i] = new Clock(350 * (i % 2) + 70, 120 * (i / 2) + 65, tzinputboxes[i].getText(), new Line(), new Line(), new Line(), new Line[60], new Circle(), new Circle(), new Text(), new Text());
 					//In the same manner as the input boxes and the dropdown menus, this arranges the clock objects L-R, T-B, 2 x 5
 					gridclocks[i].create();
-					rootNode.getChildren().addAll(gridclocks[i].backgroundrect, gridclocks[i].frame, gridclocks[i].hourhand, gridclocks[i].minutehand, gridclocks[i].secondhand, gridclocks[i].center, gridclocks[i].timedisplay, gridclocks[i].timezonedisplay);
+					rootNode.getChildren().addAll(gridclocks[i].frame, gridclocks[i].hourhand, gridclocks[i].minutehand, gridclocks[i].secondhand, gridclocks[i].center, gridclocks[i].timedisplay, gridclocks[i].timezonedisplay);
 					
 					for (j = 0; j < 60; j++) {
 						rootNode.getChildren().add(gridclocks[i].tickmark[j]);
@@ -316,7 +308,6 @@ public class zhanganalogclockchallenge extends Application {
 								inbetweensecond = 0;
 								second = newsecond;
 							} else if (i == 0) {
-								System.out.println(inbetweensecond);
 								inbetweensecond++;
 							}
 							//inbetweensecond always exists between 0 and 60. It's reset to 0 every time the second value changes. Once it's divided by 60, it represents a fraction of a second, which paves the way to smooth ticking!
